@@ -126,6 +126,12 @@ jobs:
       - image: amazon/aws-cli
     steps:
       - checkout
+
+      - run:
+          name: install tar
+          command: |
+            yum install -y tar gzip
+            
       - run:
           name: Ensure back-end infrastructure exists
           command: |
@@ -134,11 +140,7 @@ jobs:
               --tags project=udapeople \
               --stack-name "udapeoplebackend-${CIRCLE_WORKFLOW_ID:0:7}" \
               --parameter-overrides ID="${CIRCLE_WORKFLOW_ID:0:7}"  
-      - run:
-          name: install tar
-          command: |
-            sudo apt-get install -y tar
-            
+
       - run:
           name: Ensure front-end infrastructure exist
           command: |

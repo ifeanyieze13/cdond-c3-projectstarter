@@ -212,7 +212,7 @@ jobs:
     docker:
       - image: circleci/node:13.8.0
     steps:
-      - Checkout
+      - checkout
       - run:
           name: Install dependencies
           command: |
@@ -326,3 +326,7 @@ workflows:
           requires: [deploy-infrastructure]
       - run-migrations:
           requires: [configure-infrastructure]
+      - deploy-frontend:
+          requires: [run-migrations]
+      - deploy-backend:
+          requires: [run-migrations]

@@ -240,7 +240,7 @@ jobs:
     docker:
       - image: amazon/aws-cli
     steps:
-      - Checkout
+      - checkout
       - attach_workspace:
           at: ~/
       - run:
@@ -278,7 +278,7 @@ jobs:
     docker:
       - image: python:3.7-alpine3.16
     steps:
-      - Checkout
+      - checkout
       - add_ssh_keys:
           fingerprints:
             - 'a6:e3:e5:de:5e:be:f9:35:a7:c2:21:d4:17:4e:db:67:3e:2c:c3:79'

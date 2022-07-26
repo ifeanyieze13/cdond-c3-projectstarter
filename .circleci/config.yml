@@ -239,15 +239,15 @@ jobs:
 
   deploy-frontend:
     docker:
-      - image: amazon/aws-cli
+      - image: python:3.7-alpine3.16
     steps:
       - checkout
-      - attach_workspace:
-          at: ~/
       - run:
           name: Install dependencies
           command: |
             apk add --updste --no-cache tar python ansible node npm aws-cli
+      - attach_workspace:
+          at: ~/
 
       - restore_cache:
           keys: [frontend-build] 

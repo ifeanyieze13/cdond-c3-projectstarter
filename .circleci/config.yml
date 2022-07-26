@@ -29,14 +29,14 @@ commands:
             npm run build
             npm run migrations:revert
             # Curl command here to see if there was a successful migration associated with the workflow id, store result in SUCCESS variable
-            SUCCESS = 1
-            if(( $SUCCESS==1 )); 
-            then
+            #SUCCESS = 1
+            #if(( $SUCCESS==1 )); 
+            #then
             #  cd ~/project/backend
             #  npm install
             #  Add revert code here. You can find this in the Getting Started section.
-              exit 1
-            fi
+            #  exit 1
+            #fi
 
 # Define a job to be invoked later in a workflow.
 # See: https://circleci.com/docs/2.0/configuration-reference/#jobs
@@ -273,7 +273,8 @@ jobs:
             tar -czvf artifact-"${CIRCLE_WORKFLOW_ID:0:7}".tar.gz dist
             aws s3 cp dist s3://udapeople-${CIRCLE_WORKFLOW_ID:0:7} --recursive
 
-      - destroy_environment 
+      - destroy_environment
+      - revert-migrations
                     
   deploy-backend:
     docker:

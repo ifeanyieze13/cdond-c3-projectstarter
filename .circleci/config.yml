@@ -362,13 +362,13 @@ jobs:
 
   # cloudfront-update:
   #   docker:
-  #     # Docker image here that supports AWS CLI
+  #     - image: amazon/aws-cli
   #   steps:
-  #     # Checkout code from git
+  #     - checkout
   #     - run:
   #         name: Install dependencies
   #         command: |
-  #           # your code here
+  #           yum install -y npm nodejs
   #     - run:
   #         name: Update cloudfront distribution
   #         command: |
@@ -417,3 +417,5 @@ workflows:
            requires: [run-migrations]
       - deploy-backend:
           requires: [run-migrations]
+      - smoke-test:
+          requires: [deploy-frontend, deploy-backend]

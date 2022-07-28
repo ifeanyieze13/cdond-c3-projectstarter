@@ -204,8 +204,22 @@ jobs:
       - run:
           name: Configure server
           command: |
+            echo ENVIRONMENT=production > backend/.env
+            echo TYPEORM_CONNECTION=$TYPEORM_CONNECTION >> backend/.env
+            echo TYPEORM_ENTITIES=$TYPEORM_ENTITIES >> backend/.env
+            echo TYPEORM_HOST=$TYPEORM_HOST >> backend/.env
+            echo TYPEORM_PORT=$TYPEORM_PORT >> backend/.env
+            echo TYPEORM_USERNAME=$TYPEORM_USERNAME >> backend/.env
+            echo TYPEORM_PASSWORD=$TYPEORM_PASSWORD >> backend/.env
+            echo TYPEORM_DATABASE=$TYPEORM_DATABASE >> backend/.env
+            echo TYPEORM_MIGRATIONS=$TYPEORM_MIGRATIONS >> backend/.env
+            echo TYPEORM_MIGRATIONS_DIR=$TYPEORM_MIGRATIONS_DIR >> backend/.env
+            cat backend/.env
            cd .circleci/ansible
            ansible-playbook -i inventory.txt configure-server.yml
+      - persist_to_workspace:
+          root: ~/
+          paths: [project/backend]
       - destroy_environment  
 
   run-migrations:
@@ -222,6 +236,8 @@ jobs:
             sudo ./aws/install
       - restore_cache:
           keys: [backend-build]
+      - attach_workspace:
+          at: ~/
       - run:
           name: Run migrations
           command: |
@@ -284,14 +300,16 @@ jobs:
       - add_ssh_keys:
           fingerprints:
             - '96:39:2b:8d:b3:9e:9b:e4:52:72:db:c7:ae:4c:11:14'
-      - attach_workspace:
-          at: ~/
+      
       - run:
           name: Install dependencies
           command: |
             apk add --update --no-cache tar gzip nodejs npm aws-cli ansible
       - restore_cache:
           keys: [backend-build]
+      - attach_workspace:
+          at: ~/
+    
       - run:
           name: Deploy backend
           command: |

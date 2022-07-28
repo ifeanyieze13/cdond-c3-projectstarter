@@ -352,9 +352,9 @@ jobs:
           command: |
             URL="http://udapeople-${CIRCLE_WORKFLOW_ID:0:7}.s3-website-us-east-1.amazonaws.com/#/employees"            
             echo ${URL} 
-            if curl ${URL} | grep "Welcome"; then return 1; else return 1; fi
-      - destroy_environment
-      - revert-migrations
+            if curl ${URL} | grep "Welcome"; then return 0; else return 1; fi
+#      - destroy_environment
+#      - revert-migrations
 
   # cloudfront-update:
   #   docker:
@@ -415,8 +415,8 @@ workflows:
       #     requires: [build-backend]
       # - scan-frontend:
       #     requires: [build-frontend]
-      - deploy-infrastructure:
-          requires: [test-frontend, test-backend, scan-frontend, scan-backend]
+      - deploy-infrastructure
+      #    requires: [test-frontend, test-backend, scan-frontend, scan-backend]
       - configure-infrastructure:
           requires: [deploy-infrastructure]
       - run-migrations:

@@ -1,5 +1,5 @@
 ---
-- name: update packages
+- name: 'update packages'
   become: yes
   apt:
     upgrade: yes

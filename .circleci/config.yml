@@ -122,8 +122,9 @@ jobs:
               cd frontend
               npm install
               npm audit fix --audit-level=critical --force
-              npm audit fix --audit-level=critical --force
+              npm audit fix --force
               npm audit --audit-level=critical
+              
       - save_cache:
           paths: [frontend/node_modules]
           key: frontend-analyze
@@ -141,7 +142,9 @@ jobs:
              cd backend
              npm install
              npm audit fix --audit-level=critical --force
-
+             npm audit fix --force
+             npm audit --audit-level=critical
+             
       - save_cache:
           paths: [backend/node_modules]
           key: backend-analyze
@@ -288,7 +291,6 @@ jobs:
           command: |
             cd frontend
             npm install
-            npm run build
             tar -czvf artifact-"${CIRCLE_WORKFLOW_ID:0:7}".tar.gz dist
             aws s3 cp dist s3://udapeople-${CIRCLE_WORKFLOW_ID:0:7} --recursive
 
@@ -319,6 +321,7 @@ jobs:
             cd backend
             npm install
             npm run build
+            npm audit fix --force
             cd ..
             tar -C backend -czvf artifact.tar.gz .
             mkdir -p ~/project/.circleci/ansible/roles/deploy/files/
@@ -418,15 +421,15 @@ workflows:
           requires: [build-backend]
       - scan-frontend:
           requires: [build-frontend]
-      - deploy-infrastructure:
-         requires: [test-frontend, test-backend, scan-frontend, scan-backend]
-      - configure-infrastructure:
-          requires: [deploy-infrastructure]
-      - run-migrations:
-          requires: [configure-infrastructure]
-      - deploy-frontend:
-           requires: [run-migrations]
-      - deploy-backend:
-          requires: [run-migrations]
-      - smoke-test:
-          requires: [deploy-frontend, deploy-backend]
+      # - deploy-infrastructure:
+      #    requires: [test-frontend, test-backend, scan-frontend, scan-backend]
+      # - configure-infrastructure:
+      #     requires: [deploy-infrastructure]
+      # - run-migrations:
+      #     requires: [configure-infrastructure]
+      # - deploy-frontend:
+      #      requires: [run-migrations]
+      # - deploy-backend:
+      #     requires: [run-migrations]
+      # - smoke-test:
+      #     requires: [deploy-frontend, deploy-backend]

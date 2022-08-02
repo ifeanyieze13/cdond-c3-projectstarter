@@ -420,7 +420,7 @@ workflows:
       # - add-prometheus-node-exporter:
       #     requires: [deploy-infrastructure]
       - configure-infrastructure:
-          requires: [add-prometheus-node-exporter]
+          requires: [deploy-infrastructure]
       - run-migrations:
           requires: [configure-infrastructure]
       - deploy-frontend:

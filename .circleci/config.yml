@@ -182,6 +182,7 @@ jobs:
             --query 'Reservations[*].Instances[*].PublicIpAddress' \
             --filters Name=tag:aws:cloudformation:stack-name,Values=udapeoplebackend-${CIRCLE_WORKFLOW_ID:0:7} \
             --output text) >> ~/project/.circleci/ansible/inventory.txt
+            cat inventory.txt
             
       - persist_to_workspace:
           root: ~/
@@ -270,7 +271,7 @@ jobs:
       - run: yum -y install nodejs
       - run: yum install -y tar gzip
       - attach_workspace:
-          at: ./
+          at: ~/
       - run: aws ec2 describe-instances --filters Name=tag:Name,Values="backend-${CIRCLE_WORKFLOW_ID:0:7}" --query 'Reservations[*].Instances[*].PublicIpAddress' --output text
       - run: echo "export BACKEND_IP=$(aws ec2 describe-instances --filters Name=tag:Name,Values="backend-${CIRCLE_WORKFLOW_ID:0:7}" --query 'Reservations[*].Instances[*].PublicIpAddress' --output text)" >> $BASH_ENV; source $BASH_ENV
       - run: echo $BACKEND_IP
@@ -279,9 +280,9 @@ jobs:
       - run: echo API_URL="http://${BACKEND_IP}:3030" >> frontend/.env
       - run: cat frontend/.env
       - persist_to_workspace:
-          root: ./
+          root: ~/
           paths:
-            - "./frontend/.env"
+            - "~/frontend/.env"
       - run: cd frontend && npm install
       - run: cd frontend && npm run build && ls
 
@@ -305,7 +306,7 @@ jobs:
       - run: python --version
       - run: yum install -y tar gzip
       - attach_workspace:
-          at: ./
+          at: ~/
       - run:
           name: install ansible
           command: amazon-linux-extras install ansible2 -y

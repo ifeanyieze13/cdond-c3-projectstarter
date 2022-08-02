@@ -283,7 +283,7 @@ jobs:
       - persist_to_workspace:
           root: ~/
           paths:
-            - "~/frontend/.env"
+            - project/frontend
       - run: cd frontend && npm install
       - run: cd frontend && npm run build && ls
 
@@ -299,7 +299,7 @@ jobs:
     steps:
       - checkout
       - add_ssh_keys:
-          fingerprints: ["a8:db:51:9a:82:49:74:d7:1b:35:99:f6:b5:5a:18:3f"]
+          fingerprints: ["96:39:2b:8d:b3:9e:9b:e4:52:72:db:c7:ae:4c:11:14"]
       - run: curl --silent --location https://rpm.nodesource.com/setup_16.x | bash -
       - run: yum update -y
       - run: yum -y install nodejs

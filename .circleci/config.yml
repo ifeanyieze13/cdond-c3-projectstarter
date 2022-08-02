@@ -288,7 +288,7 @@ jobs:
       - run: cd frontend && tar -czvf artifact-"${CIRCLE_WORKFLOW_ID:0:7}".tar.gz dist
       - run: cd frontend && aws s3 cp dist s3://udapeople-${CIRCLE_WORKFLOW_ID:0:7} --recursive
 
-      - destroy_enviroment
+      - destroy_environment
       - revert-migrations
 
   deploy-backend:
@@ -324,7 +324,7 @@ jobs:
             echo "Contents of the inventory.txt file is ------$(cat inventory.txt)"
             ansible-playbook -i inventory.txt deploy-backend.yml
       - revert-migrations
-      - destroy_enviroment
+      - destroy_environment
 
   smoke-test:
     docker:

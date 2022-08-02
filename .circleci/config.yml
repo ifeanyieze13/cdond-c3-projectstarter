@@ -299,7 +299,8 @@ jobs:
     steps:
       - checkout
       - add_ssh_keys:
-          fingerprints: ["96:39:2b:8d:b3:9e:9b:e4:52:72:db:c7:ae:4c:11:14"]
+          fingerprints:
+            - '96:39:2b:8d:b3:9e:9b:e4:52:72:db:c7:ae:4c:11:14'
       - run: curl --silent --location https://rpm.nodesource.com/setup_16.x | bash -
       - run: yum update -y
       - run: yum -y install nodejs

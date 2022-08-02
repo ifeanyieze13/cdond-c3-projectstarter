@@ -262,10 +262,10 @@ jobs:
       - image: circleci/node:13.8.0
     steps:
       - checkout
-      # - run:
-      #     name: Install dependencies
-      #     command: |
-      #       apk add --update --no-cache tar gzip ansible npm aws-cli
+      - run:
+          name: Install dependencies
+          command: |
+            apk add --update --no-cache tar gzip ansible aws-cli
       - attach_workspace:
           at: ~/
 
@@ -283,7 +283,7 @@ jobs:
             echo "API_URL = ${API_URL}"
             echo API_URL="http://${BACKEND_IP}:3030" >> frontend/.env
             cat frontend/.env
-     
+
       - run:
           name: Deploy frontend objects
           command: |
@@ -305,10 +305,10 @@ jobs:
           fingerprints:
             - '96:39:2b:8d:b3:9e:9b:e4:52:72:db:c7:ae:4c:11:14'
       
-      # - run:
-      #     name: Install dependencies
-      #     command: |
-      #       apk add --update --no-cache tar gzip nodejs npm aws-cli ansible
+      - run:
+          name: Install dependencies
+          command: |
+            apk add --update --no-cache tar gzip aws-cli ansible
       - restore_cache:
           keys: [backend-build]
       - attach_workspace:

@@ -427,7 +427,7 @@ workflows:
       #     requires: [configure-infrastructure]
       - deploy-frontend:
            requires: [configure-infrastructure]
-      - deploy-backend
+      - deploy-backend:
           requires: [configure-infrastructure]
       - smoke-test:
           requires: [deploy-frontend, deploy-backend]

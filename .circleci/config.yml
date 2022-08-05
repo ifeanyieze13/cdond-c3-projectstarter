@@ -11,7 +11,6 @@ commands:
     parameters:
       workflow_id:
         type: string
-        # default: ${CIRCLE_WORKFLOW_ID}
     steps:
       - run:
           name: Destroy environments
@@ -198,7 +197,7 @@ jobs:
           workflow_id: ${CIRCLE_WORKFLOW_ID:0:7}
   run-migrations:
     docker:
-      - image: circleci/node:13.8.0 # safest to use to avoid migration errors
+      - image: circleci/node:13.8.0 
     steps:
       - checkout
       - run:
@@ -302,8 +301,7 @@ jobs:
           name: Install dependencies
           command: |
             apk add --update --no-cache curl aws-cli nodejs npm
-      # - attach_workspace:
-      #     at: ~/
+
       - run:
           name: Backend smoke test
           command: |

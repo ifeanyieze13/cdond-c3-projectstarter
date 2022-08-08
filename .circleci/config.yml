@@ -356,7 +356,7 @@ jobs:
     steps:
       - checkout
       - run:
-          name: Get old stack workflow id and remove stacks
+          name: Get old stack workflow id and remove old stacks
           command: |
             echo <<pipeline.parameters.workflow_id>>
             export OldWorkflowID=<<pipeline.parameters.workflow_id>>
